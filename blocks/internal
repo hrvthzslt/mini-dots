@@ -1,0 +1,28 @@
+#!/bin/sh
+
+main() {
+  case "$1" in
+    install)
+      install
+      ;;
+    link)
+      link
+      ;;
+    *)
+      echo "Usage: $0 {install|link}"
+      exit 1
+      ;;
+  esac
+}
+
+prints() {
+  printf "\033[0;32m%s\033[0m\n" "$1"
+}
+
+is_debian() {
+  if command -v apt >/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}

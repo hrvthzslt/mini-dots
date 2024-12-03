@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. "$(dirname "$0")"/../internal
+
+install() {
+  prints "Installing vim..."
+  is_debian && sudo apt install -y vim
+}
+
+link() {
+  prints "Linking vim config..."
+  ln -sf "$PWD"/files/.vimrc "$HOME"/.vimrc
+}
+
+main "$@"
