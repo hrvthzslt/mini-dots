@@ -125,7 +125,7 @@ nnoremap gt <C-]>
 " Fixlist
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprev<CR>
-nnoremap <leader>o :copen<CR>
+nnoremap <leader>c :copen<CR>
 
 " Marks
 nnoremap <leader>U mU<CR>
