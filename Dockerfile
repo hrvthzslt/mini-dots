@@ -8,8 +8,8 @@ RUN useradd -m -s /bin/bash user && \
     echo 'user:password' | chpasswd && \
     usermod -aG sudo user
 
-WORKDIR /home/user/test
+WORKDIR /home/user/minimalist-cli-setup
 
 USER user
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["bash"]

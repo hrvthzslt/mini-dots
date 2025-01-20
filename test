@@ -1,0 +1,9 @@
+#!/bin/sh
+
+main() {
+  echo "Starting test container with user/password"
+  docker build -t minimalist-cli:test .
+  docker run -v "$(pwd)":/home/user/minimalist-cli-setup --rm -it minimalist-cli:test
+}
+
+main
