@@ -1,6 +1,9 @@
 help:
 	@echo "Usage: make setup|install|link"
 
+test-setup:
+	@./test
+
 install: vim-install
 
 link: vim-link
@@ -8,7 +11,7 @@ link: vim-link
 setup: install link
 
 vim-install:
-	@./blocks/vim/vim install
+	@./vim install
 
 vim-link:
-	@./blocks/vim/vim link
+	@./vim link

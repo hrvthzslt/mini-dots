@@ -1,8 +1,0 @@
-services:
-  test:
-    image: test
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/home/user/test

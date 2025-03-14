@@ -1,7 +1,6 @@
 #!/bin/sh
 
-DIR="$(dirname "$(realpath "$0")")"
-. "$DIR"/../internal
+. ./internal
 
 install() {
   prints "Installing vim..."
@@ -10,7 +9,7 @@ install() {
 
 link() {
   prints "Linking vim config..."
-  ln -sf "$DIR"/files/.vimrc "$HOME"/.vimrc
+  ln -sf "$DIR"/config/vim/.vimrc "$HOME"/.vimrc
 }
 
 main "$@"

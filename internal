@@ -1,5 +1,8 @@
 #!/bin/sh
 
+DIR="$(dirname "$(realpath "$0")")"
+export DIR
+
 main() {
   case "$1" in
     install)
@@ -17,6 +20,10 @@ main() {
 
 prints() {
   printf "\033[0;32m%s\033[0m\n" "$1"
+}
+
+printe() {
+  printf "\033[0;31m%s\033[0m\n" "$1"
 }
 
 is_debian() {
