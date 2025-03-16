@@ -20,4 +20,4 @@ tmux-link: # link tmux config
 	@./tmux link
 
 test-setup: # Setup test environment
-	@./test
+	@./test_setup
