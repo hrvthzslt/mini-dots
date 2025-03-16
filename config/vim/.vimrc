@@ -62,13 +62,6 @@ set signcolumn=number
 " Set colorcolumn
 set colorcolumn=120
 
-" Enable undofile and backup
-set undofile
-set backup
-
-" Set backupdir
-set backupdir-=.
-
 " Set spelllang and spelloptions
 set spelllang=en_us,hu
 
@@ -128,15 +121,44 @@ nnoremap <leader>p :cprev<CR>
 nnoremap <leader>c :copen<CR>
 
 " Marks
-nnoremap <leader>U mU<CR>
-nnoremap <leader>I mI<CR>
-nnoremap <leader>O mO<CR>
-nnoremap <leader>Z mZ<CR>
+nnoremap <leader>U mU
+nnoremap <leader>I mI
+nnoremap <leader>O mO
+nnoremap <leader>Z mZ
 
-nnoremap <leader>u 'U<CR>
-nnoremap <leader>i 'I<CR>
-nnoremap <leader>o 'O<CR>
-nnoremap <leader>z 'Z<CR>
+nnoremap <leader>u 'U
+nnoremap <leader>i 'I
+nnoremap <leader>o 'O
+nnoremap <leader>z 'Z
 
 " Open explorer
 nnoremap - :Explore<CR>
+
+" Registers and clipboard
+"
+" Use system clipboard
+set clipboard+=unnamedplus
+
+" Mapping for "c" and "C"
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
+
+" Mapping for "d" and "D"
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
+
+" Mapping for "x" and "X"
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
+
+" Mapping for "s" and "S"
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
