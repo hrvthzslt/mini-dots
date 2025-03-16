@@ -33,21 +33,11 @@ set wildignore+=tags
 
 " Set completion options
 set completeopt=menuone,longest,preview
-setglobal complete-=i
-
-" Enable setting the title of window to the value of 'titlestring'
-set title
-
-" Enable mouse in all modes
-set mouse=a
+set complete=.,t,w,b,u
 
 " Set ignorecase and smartcase
 set ignorecase
 set smartcase
-
-" Enable splitbelow and splitright
-set splitbelow
-set splitright
 
 " Set scrolloff and sidescrolloff
 set scrolloff=8
@@ -56,14 +46,8 @@ set sidescrolloff=5
 " Confirm before writing or abandoning a modified buffer
 set confirm
 
-" Set signcolumn
-set signcolumn=number
-
 " Set colorcolumn
 set colorcolumn=120
-
-" Set spelllang and spelloptions
-set spelllang=en_us,hu
 
 " Disable folding by default
 set nofoldenable
@@ -111,14 +95,20 @@ nnoremap <leader>b :b<Space>
 nnoremap <leader>f :find<Space>
 
 " Start search
-nnoremap <leader>s :vimgrep // *<Left><Left><Left>
-nnoremap <leader>S :grep! --exclude=tags -si "\<<cword>\>" . -r<CR>:copen<CR>
+nnoremap <leader>s :vimgrep // **<Left><Left><Left><Left>
+nnoremap gr :grep! --exclude=tags --exclude-dir=.git -si "\<<cword>\>" . -r<CR>:copen<CR>
 nnoremap gt <C-]>
 
 " Fixlist
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprev<CR>
 nnoremap <leader>c :copen<CR>
+
+" Open quickfixlist after search
+augroup searchlist
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
 
 " Marks
 nnoremap <leader>U mU
@@ -130,6 +120,12 @@ nnoremap <leader>u 'U
 nnoremap <leader>i 'I
 nnoremap <leader>o 'O
 nnoremap <leader>z 'Z
+
+" Navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Open explorer
 nnoremap - :Explore<CR>
