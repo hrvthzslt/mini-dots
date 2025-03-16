@@ -1,7 +1,7 @@
 help:
 	@grep -h -E '^[a-zA-Z0-9_-]+:.*?# .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?# "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: vim-install tmux-install # Install all sotware
+install: vim-install tmux-install ctags-install # Install all sotware
 
 link: vim-link tmux-link # Link all config
 
@@ -15,6 +15,9 @@ vim-link: # link vim config
 
 tmux-install: # Install tmux
 	@./tmux install
+
+ctags-install: # Install ctags universal
+	@./ctags install
 
 tmux-link: # link tmux config
 	@./tmux link

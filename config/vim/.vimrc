@@ -39,6 +39,10 @@ set complete=.,t,w,b,u
 set ignorecase
 set smartcase
 
+" Move cursor with split
+set splitbelow
+set splitright
+
 " Set scrolloff and sidescrolloff
 set scrolloff=8
 set sidescrolloff=5
