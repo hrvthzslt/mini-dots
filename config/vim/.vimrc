@@ -140,25 +140,25 @@ nnoremap - :Explore<CR>
 set clipboard+=unnamedplus
 
 " Mapping for "c" and "C"
-nnoremap c "_c
-vnoremap c "_c
-nnoremap C "_C
-vnoremap C "_C
+nnoremap c "cc
+vnoremap c "cc
+nnoremap C "cC
+vnoremap C "cC
 
 " Mapping for "d" and "D"
-nnoremap d "_d
-vnoremap d "_d
-nnoremap D "_D
-vnoremap D "_D
+nnoremap d "dd
+vnoremap d "dd
+nnoremap D "dD
+vnoremap D "dD
 
 " Mapping for "x" and "X"
-nnoremap x "_x
-vnoremap x "_x
-nnoremap X "_X
-vnoremap X "_X
+nnoremap x "xx
+vnoremap x "xx
+nnoremap X "xX
+vnoremap X "xX
 
 " Mapping for "s" and "S"
-nnoremap s "_s
-vnoremap s "_s
-nnoremap S "_S
-vnoremap S "_S
+nnoremap s "ss
+vnoremap s "ss
+nnoremap S "sS
+vnoremap S "sS
