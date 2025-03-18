@@ -10,7 +10,7 @@ setup: install link # Install all software and link all config
 vim-install: # Install vim
 	@./vim install
 
-vim-link: # link vim config
+vim-link: # Link vim config
 	@./vim link
 
 tmux-install: # Install tmux
@@ -19,7 +19,7 @@ tmux-install: # Install tmux
 ctags-install: # Install ctags universal
 	@./ctags install
 
-tmux-link: # link tmux config
+tmux-link: # Link tmux config
 	@./tmux link
 
 test-setup: # Setup test environment
