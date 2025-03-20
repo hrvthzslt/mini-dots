@@ -3,7 +3,7 @@
 main() {
   echo "Starting test container with user/password"
   docker build -t mini-dots:test test/
-  docker run -v "$(pwd)":/home/user/mini-dots --rm -it minimalist-cli:test
+  docker run -v "$(pwd)":/home/user/mini-dots --rm -it mini-dots:test
 }
 
 main
