@@ -11,4 +11,4 @@ link() {
   printe "Nothing to link."
 }
 
-main "$@"
+main "$1"

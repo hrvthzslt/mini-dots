@@ -12,4 +12,4 @@ link() {
   ln -sf "$DIR"/config/tmux/.tmux.conf "$HOME"/.tmux.conf
 }
 
-main "$@"
+main "$1"

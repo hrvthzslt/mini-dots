@@ -12,4 +12,4 @@ link() {
   ln -sf "$DIR"/config/vim/.vimrc "$HOME"/.vimrc
 }
 
-main "$@"
+main "$1"
