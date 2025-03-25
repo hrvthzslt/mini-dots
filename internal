@@ -19,11 +19,11 @@ main() {
 }
 
 prints() {
-  printf "\033[0;32m%s\033[0m\n" "$1"
+  printf "\033[1;32m%s\033[0m\n" "$1"
 }
 
 printe() {
-  printf "\033[0;31m%s\033[0m\n" "$1"
+  printf "\033[1;31m%s\033[0m\n" "$1"
 }
 
 is_debian() {

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. ./internal
+
+install() {
+  prints "Installing ctags universal and man..."
+  is_debian && sudo apt install -y universal-ctags man
+}
+
+link() {
+  printe "Nothing to link."
+}
+
+main "$@"
