@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y sudo make
+    apt-get install -y sudo make git
 
 ARG USER_ID
 ARG GROUP_ID

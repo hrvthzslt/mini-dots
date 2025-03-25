@@ -1,0 +1,19 @@
+#!/bin/sh
+
+. ./internal
+
+install() {
+  printe "Nothing to install"
+}
+
+link() {
+  mkdir -p "$HOME"/.local/bin
+
+  for file in "$DIR"/config/scripts/*; do
+    filename=$(basename "$file")
+    prints "Linking script: $filename..."
+    ln -sf "$DIR"/config/scripts/"$filename" "$HOME"/.local/bin/"$filename"
+  done
+}
+
+main "$1"

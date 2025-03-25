@@ -5,7 +5,7 @@ setup: install link # Install all software and link all config
 
 install: vim-install tmux-install tools-install # Install all sotware
 
-link: vim-link tmux-link # Link all config
+link: vim-link tmux-link scripts-link # Link all config
 
 vim-install: # Install vim
 	@./vim install
@@ -18,6 +18,9 @@ tmux-install: # Install tmux
 
 tmux-link: # Link tmux config
 	@./tmux link
+
+scripts-link: # Link scripts
+	@./scripts link
 
 tools-install: # Install ctags universal and man
 	@./tools install
