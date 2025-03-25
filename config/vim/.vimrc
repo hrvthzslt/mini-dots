@@ -92,16 +92,20 @@ nnoremap <leader>Q :%bd<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :wa<CR>
 
-" Select open buffers
-nnoremap <leader>b :b<Space>
-
-" Start find
-nnoremap <leader>f :find<Space>
-
-" Start search
-nnoremap <leader>s :vimgrep // **<Left><Left><Left><Left>
+" Search and tags
+nnoremap <leader>sb :b<Space>
+nnoremap <leader>sf :find<Space>
+nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
 nnoremap gr :grep! --exclude=tags --exclude-dir=.git -si "\<<cword>\>" . -r<CR>:copen<CR>
-nnoremap gt <C-]>
+
+function! GoToTagOrDefinition()
+    try
+        execute 'tag ' . expand('<cword>')
+    catch
+        execute 'normal! gd'
+    endtry
+endfunction
+nnoremap gd :call GoToTagOrDefinition()<CR>
 
 " Fixlist
 nnoremap <leader>n :cnext<CR>
