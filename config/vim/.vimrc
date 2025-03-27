@@ -28,6 +28,7 @@ set path=$PWD/**
 
 " Set wildmode
 set wildmenu
+set wildoptions=pum
 set wildmode=longest:full,full
 set wildignore+=tags
 
@@ -60,8 +61,8 @@ set nofoldenable
 set laststatus=2
 
 " Colors
-hi Normal guibg=NONE ctermbg=NONE
-hi Pmenu ctermbg=gray guibg=gray
+hi Pmenu ctermbg=white guibg=white
+hi PmenuSel ctermbg=yellow guibg=yellow
 
 " Set leader and local leader
 let mapleader = "\<Space>"
@@ -141,7 +142,7 @@ nnoremap - :Explore<CR>
 " Registers and clipboard
 "
 " Use system clipboard
-set clipboard+=unnamedplus
+set clipboard+=unnamed
 
 " Mapping for "c" and "C"
 nnoremap c "cc
@@ -166,3 +167,6 @@ nnoremap s "ss
 vnoremap s "ss
 nnoremap S "sS
 vnoremap S "sS
+
+" Should not do it but it annoys me
+set noswapfile
