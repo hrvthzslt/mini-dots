@@ -30,7 +30,7 @@ set path=$PWD/**
 set wildmenu
 set wildoptions=pum
 set wildmode=longest:full,full
-set wildignore+=tags
+set wildignorecase
 
 " Set completion options
 set completeopt=menuone,longest,preview
