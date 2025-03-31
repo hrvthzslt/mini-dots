@@ -1,0 +1,12 @@
+# Minimalist CLI Development Environment
+
+## Automation
+
+- POSIX shell scripts
+- Structured with functions
+- Organized with Makefile
+
+## Text Editor
+
+## Session manager (for screen management as well)
+

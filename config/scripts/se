@@ -5,15 +5,4 @@ session() {
   tmux new -s "$session_name" 2>/dev/null || tmux attach -f "$session_name"
 }
 
-se() {
-  case "$1" in
-    a)
-      tmux attach
-      ;;
-    *)
-      session
-      ;;
-  esac
-}
-
-se "$1"
+session

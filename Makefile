@@ -24,6 +24,3 @@ scripts-link: # Link scripts
 
 tools-install: # Install ctags universal and man
 	@./tools install
-
-test-setup: # Setup test environment
-	@./test_setup
