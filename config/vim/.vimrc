@@ -33,8 +33,14 @@ set wildmode=longest:full,full
 set wildignorecase
 
 " Set completion options
-set completeopt=menuone,longest,preview
+set completeopt=menuone,longest,preview,noselect,noinsert
 set complete=.,t,w,b,u
+function! OpenCompletion()
+    if !pumvisible()
+        call feedkeys("\<C-n>", "n")
+    endif
+endfunction
+autocmd InsertCharPre * call OpenCompletion()
 
 " Set ignorecase and smartcase
 set ignorecase
@@ -107,6 +113,8 @@ function! GoToTagOrDefinition()
     endtry
 endfunction
 nnoremap gd :call GoToTagOrDefinition()<CR>
+
+nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Fixlist
 nnoremap <leader>n :cnext<CR>

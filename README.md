@@ -11,7 +11,7 @@
 - File navigation (with **Netrw**) and search (with **wildmenu**)
 - Code navigation (with **ctags** and **grep**)
 - Further easing navigation with **marks** and the **quickfix list**
-- Built-in auto-completion (enhanced with **ctags**)
+- Built-in auto-completion (enhanced with **ctags**) invoked automatically
 
 ## Screen Management
 
