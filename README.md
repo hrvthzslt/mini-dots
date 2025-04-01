@@ -2,6 +2,8 @@
 
 **The Minimalist CLI Development Environment**
 
+[![asciicast](https://asciinema.org/a/eJ6oK0Gc4GrRD0zLrQthPjbMt.svg)](https://asciinema.org/a/eJ6oK0Gc4GrRD0zLrQthPjbMt)
+
 ## Text Editor
 
 **Vim** without plugins, providing features like:
@@ -24,9 +26,3 @@
 - **POSIX** compliant shell scripts
 - Structured with functions
 - Organized in a **Makefile**
-
-## Bonus
-
-It looks great on **tty** as well!
-
-![tty](.test/tty.png)
