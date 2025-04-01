@@ -130,12 +130,6 @@ nnoremap <leader>i 'I
 nnoremap <leader>o 'O
 nnoremap <leader>z 'Z
 
-" Navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " Open explorer
 nnoremap - :Explore<CR>
 
