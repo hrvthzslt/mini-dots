@@ -14,6 +14,7 @@ link() {
     prints "Linking script: $filename..."
     ln -sf "$DIR"/config/scripts/"$filename" "$HOME"/.local/bin/"$filename"
   done
+  exec bash -l
 }
 
 main "$1"

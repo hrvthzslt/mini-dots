@@ -1,10 +1,10 @@
 #!/bin/sh
 
-main() {
+run_test_environment() {
   rm tags 2>/dev/null
   echo "Starting test container with user/password"
   docker build --build-arg USER_ID="$(id -u)" --build-arg GROUP_ID="$(id -g)" . -t mini-dots:test
   docker run -v "$(pwd)"/../:/home/user/mini-dots --rm -it mini-dots:test
 }
 
-main
+run_test_environment

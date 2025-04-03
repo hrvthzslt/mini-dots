@@ -36,9 +36,12 @@ set wildignorecase
 set completeopt=menuone,longest,preview,noselect,noinsert
 set complete=.,t,w,b,u
 function! OpenCompletion()
-    if !pumvisible()
-        call feedkeys("\<C-n>", "n")
-    endif
+    try
+        if !pumvisible()
+            call feedkeys("\<C-n>", "n")
+        endif
+    catch
+    endtry
 endfunction
 autocmd InsertCharPre * call OpenCompletion()
 
