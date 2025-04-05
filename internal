@@ -12,7 +12,7 @@ main() {
       link
       ;;
     *)
-      echo "Usage: $1 {install|link}"
+      echo "Usage: $0 {install|link}"
       exit 1
       ;;
   esac
