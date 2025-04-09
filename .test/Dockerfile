@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y sudo make git tree
+    apt-get install -y sudo make git tree dialog apt-utils
 
 RUN useradd -m -s /bin/bash user && \
     echo 'user:password' | chpasswd && \

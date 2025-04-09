@@ -4,7 +4,7 @@
 
 install() {
   prints "Installing tmux..."
-  is_debian && sudo apt install -y tmux
+  install_package "tmux"
 }
 
 link() {

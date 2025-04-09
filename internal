@@ -26,6 +26,10 @@ printe() {
   printf "\033[1;31m%s\033[0m\n" "$1"
 }
 
+install_package() {
+  is_debian && sudo apt-get install -y "$1" > /dev/null
+}
+
 is_debian() {
   if command -v apt >/dev/null 2>&1; then
     return 0

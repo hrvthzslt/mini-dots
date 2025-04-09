@@ -4,7 +4,7 @@
 
 install() {
   prints "Installing vim..."
-  is_debian && sudo apt install -y vim
+  install_package "vim"
 }
 
 link() {
