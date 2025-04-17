@@ -9,7 +9,7 @@ install() {
 
 link() {
   prints "Linking tmux config..."
-  ln -sf "$DIR"/config/tmux/.tmux.conf "$HOME"/.tmux.conf
+  ln -sf "$PWD"/config/tmux/.tmux.conf "$HOME"/.tmux.conf
 }
 
 main "$1"

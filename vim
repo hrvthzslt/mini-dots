@@ -9,7 +9,7 @@ install() {
 
 link() {
   prints "Linking vim config..."
-  ln -sf "$DIR"/config/vim/.vimrc "$HOME"/.vimrc
+  ln -sf "$PWD"/config/vim/.vimrc "$HOME"/.vimrc
 }
 
 main "$1"

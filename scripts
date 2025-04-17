@@ -9,10 +9,10 @@ install() {
 link() {
   mkdir -p "$HOME"/.local/bin
 
-  for file in "$DIR"/config/scripts/*; do
+  for file in "$PWD"/config/scripts/*; do
     filename=$(basename "$file")
     prints "Linking script: $filename..."
-    ln -sf "$DIR"/config/scripts/"$filename" "$HOME"/.local/bin/"$filename"
+    ln -sf "$PWD"/config/scripts/"$filename" "$HOME"/.local/bin/"$filename"
   done
 }
 

@@ -1,8 +1,5 @@
 #!/bin/sh
 
-DIR="$(dirname "$(realpath "$0")")"
-export DIR
-
 main() {
   case "$1" in
     install)
