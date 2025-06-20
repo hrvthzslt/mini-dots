@@ -149,6 +149,10 @@ nnoremap - :Explore<CR>
 " Use system clipboard
 set clipboard+=unnamed
 
+" Diff
+nnoremap <leader>ff :windo diffthis<CR>
+nnoremap <leader>fo :windo diffoff<CR>
+
 " Mapping for "c" and "C"
 nnoremap c "cc
 vnoremap c "cc

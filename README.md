@@ -71,3 +71,5 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `Leader + U`,`I`,`O`,`Z` | Add a global mark                                    |
 | `Leader + u`,`i`,`o`,`z` | Jump to global mark                                  |
 | `-`                      | Open Netrw (File Explorer)                           |
+| `Leader + ff`            | Diff visible panes
+| `Leader + fo`            | Exit diff                                            |
