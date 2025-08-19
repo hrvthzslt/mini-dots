@@ -119,6 +119,12 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
+" Run files by filetype
+autocmd FileType vim nnoremap <buffer> <leader>lr :source %<CR>
+autocmd FileType sh nnoremap <buffer> <leader>lr :!shellcheck -x %<CR>
+autocmd FileType sh nnoremap <buffer> <leader>lf :%!shfmt -i 2 -ci<CR>
+autocmd FileType sh vnoremap <buffer> <leader>lf :<C-u>'<,'>!shfmt -i 2 -ci<CR>
+
 " Fixlist
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprev<CR>

@@ -64,12 +64,14 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `Leader + sg`            | Search in files                                      |
 | `gr`                     | Search for word under cursor, and open quickfix list |
 | `gd`                     | Go to tag or definition                              |
-| `Leader + t`             | Regenerate tags in working directory                 |
 | `Leader + n`             | Jump to next quickfix list item                      |
 | `Leader + p`             | Jump to previous quickfix list item                  |
 | `Leader + c`             | Open quickfix list                                   |
+| `Leader + t`             | Regenerate tags in working directory                 |
+| `Leader + lr`            | Run filetype: `vim`: source, `sh`: shellcheck        |
+| `Leader + lf`            | Format filetype: `sh`: shfmt                         |
 | `Leader + U`,`I`,`O`,`Z` | Add a global mark                                    |
 | `Leader + u`,`i`,`o`,`z` | Jump to global mark                                  |
 | `-`                      | Open Netrw (File Explorer)                           |
-| `Leader + ff`            | Diff visible panes
+| `Leader + ff`            | Diff visible panes                                   |
 | `Leader + fo`            | Exit diff                                            |
