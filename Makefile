@@ -22,5 +22,5 @@ tmux-link: # Link tmux config
 scripts-link: # Link scripts
 	@./scripts link
 
-tools-install: # Install ctags universal and man
+tools-install: # Install tools: ctags, man, shellcheck, shfmt
 	@./tools install

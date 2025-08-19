@@ -3,9 +3,11 @@
 . ./internal
 
 install() {
-  prints "Installing ctags universal and man..."
+  prints "Install tools: ctags, man, shellcheck, shfmt..."
   install_package "universal-ctags"
   install_package "man"
+  install_package "shellcheck"
+  install_package "shfmt"
 }
 
 link() {
