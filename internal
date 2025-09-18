@@ -23,8 +23,17 @@ printe() {
   printf "\033[1;31m%s\033[0m\n" "$1"
 }
 
+get_sudo() {
+  if command -v sudo >/dev/null 2>&1; then
+    echo "sudo"
+  else
+    echo ""
+  fi
+}
+
 install_package() {
-  is_debian && sudo apt-get install -y "$1" >/dev/null
+  sudo=$(get_sudo)
+  is_debian && $sudo apt-get install -y "$1" >/dev/null
 }
 
 is_debian() {

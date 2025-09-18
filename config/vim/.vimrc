@@ -24,7 +24,7 @@ set number
 set relativenumber
 
 " Search subfolders
-set path=$PWD/**
+set path=**
 
 " Set wildmode
 set wildmenu
