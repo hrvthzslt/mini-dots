@@ -75,3 +75,9 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `-`                      | Open Netrw (File Explorer)                           |
 | `Leader + ff`            | Diff visible panes                                   |
 | `Leader + fo`            | Exit diff                                            |
+
+## Auto Install
+
+```shell
+curl -fsSL  https://raw.githubusercontent.com/hrvthzslt/mini-dots/refs/heads/main/install | bash
+```

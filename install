@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+
+main() {
+  BASE_DIR="$HOME/workspace/personal"
+
+  mkdir -p "$BASE_DIR"
+
+  REPO_URL="https://github.com/yourusername/mini-dots.git"
+  REPO_DIR="$BASE_DIR/mini-dots"
+
+  if ! command -v git &>/dev/null; then
+    echo "git is required. Please install git and rerun this script."
+    exit 1
+  fi
+
+  if ! command -v make &>/dev/null; then
+    echo "make is required. Please install make and rerun this script."
+    exit 1
+  fi
+
+  if [ -d "$REPO_DIR" ]; then
+    echo "Repo already exists. Pulling latest changes..."
+    cd "$REPO_DIR"
+    git pull
+  else
+    git clone "$REPO_URL" "$REPO_DIR"
+    cd "$REPO_DIR"
+  fi
+
+  make setup
+}
+
+main
