@@ -31,6 +31,7 @@ set wildmenu
 set wildoptions=pum
 set wildmode=longest:full,full
 set wildignorecase
+set wildignore=tags
 
 " Set completion options
 set completeopt=menuone,longest,preview,noselect,noinsert
@@ -106,7 +107,7 @@ nnoremap <leader>W :wa<CR>
 nnoremap <leader>sb :b<Space>
 nnoremap <leader>sf :find<Space>
 nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
-nnoremap gr :grep! --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR>:copen<CR>
+nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR>:copen<CR>
 
 function! GoToTagOrDefinition()
     try
@@ -119,11 +120,35 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
-" Run files by filetype
-autocmd FileType vim nnoremap <buffer> <leader>lr :source %<CR>
-autocmd FileType sh nnoremap <buffer> <leader>lr :!shellcheck -x %<CR>
-autocmd FileType sh nnoremap <buffer> <leader>lf :%!shfmt -i 2 -ci<CR>
-autocmd FileType sh vnoremap <buffer> <leader>lf :<C-u>'<,'>!shfmt -i 2 -ci<CR>
+" Run/lint files by filetype
+autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %
+
+" Map <leader>lr
+nnoremap <silent> <leader>lr :call RunFileByType()<CR>
+
+function! RunFileByType()
+    if &filetype ==# 'vim'
+        execute 'source %'
+    else
+        execute 'make'
+    endif
+endfunction
+
+" Format files by filetype
+autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+autocmd FileType c nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+autocmd FileType c vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+
+function! FormatWithCursor(cmd) range
+    let l:save_cursor = getpos(".")
+    if a:firstline == a:lastline
+        execute '%!' . a:cmd
+    else
+        execute a:firstline . ',' . a:lastline . '!' . a:cmd
+    endif
+    call setpos('.', l:save_cursor)
+endfunction
 
 " Fixlist
 nnoremap <leader>n :cnext<CR>
@@ -134,6 +159,8 @@ nnoremap <leader>c :copen<CR>
 augroup searchlist
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost make cwindow
+    autocmd FileType sh autocmd QuickFixCmdPost make cwindow
 augroup END
 
 " Marks
@@ -185,3 +212,10 @@ vnoremap S "sS
 
 " Should not do it but it annoys me
 set noswapfile
+
+" Do not prompt with 'Press ENTER...' after shell commands
+set shortmess+=F
+
+" Man page
+nnoremap K K<CR>
+vnoremap K K<CR>
