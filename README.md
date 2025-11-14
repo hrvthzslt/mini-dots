@@ -27,6 +27,17 @@
 - Structured with functions
 - Organized in a **Makefile**
 
+Run `make` to see available commands.
+
+## Extra Language Tools
+
+These are not installed by default, run `make extra` to install them.
+
+- **shellcheck** for shell script linting
+- **shfmt** for shell script formatting
+- **gcc** for C code compilation
+- **clang-format** for C/C++ code formatting
+
 ## Cheat Sheet
 
 ### Scripts
@@ -80,4 +91,5 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 
 ```shell
 curl -fsSL  https://raw.githubusercontent.com/hrvthzslt/mini-dots/refs/heads/main/install | bash
+curl -fsSL https://raw.githubusercontent.com/hrvthzslt/mini-dots/refs/heads/feat/ece/install | bash
 ```
