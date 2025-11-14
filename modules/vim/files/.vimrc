@@ -124,7 +124,7 @@ nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %
 
 " Map <leader>lr
-nnoremap <silent> <leader>lr :call RunFileByType()<CR>
+nnoremap <silent> <leader>lr :call RunFileByType()<CR><CR><CR>
 
 function! RunFileByType()
     if &filetype ==# 'vim'
