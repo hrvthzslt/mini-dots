@@ -122,6 +122,7 @@ nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Run/lint files by filetype
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %
+autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
 
 " Map <leader>lr
 nnoremap <silent> <leader>lr :call RunFileByType()<CR><CR><CR>
@@ -139,6 +140,8 @@ autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -
 autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
 autocmd FileType c nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
 autocmd FileType c vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
+autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 
 function! FormatWithCursor(cmd) range
     let l:save_cursor = getpos(".")
