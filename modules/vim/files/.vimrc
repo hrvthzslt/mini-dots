@@ -107,7 +107,7 @@ nnoremap <leader>W :wa<CR>
 nnoremap <leader>sb :b<Space>
 nnoremap <leader>sf :find<Space>
 nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
-nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR>:copen<CR>
+nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
 
 function! GoToTagOrDefinition()
     try
