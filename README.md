@@ -12,6 +12,8 @@
 - Code navigation (with **ctags** and **grep**)
 - Further easing navigation with **marks** and the **quickfix list**
 - Built-in auto-completion (enhanced with **ctags**) invoked automatically
+- Edit-compile-edit cycle, with **makeprg** and **quickfix list**
+- Language specific formatting
 
 ## Screen Management
 
@@ -31,12 +33,13 @@ Run `make` to see available commands.
 
 ## Extra Language Tools
 
-These are not installed by default, run `make extra` to install them.
+Edit-compile-edit cycle support for the following languages: _shell_, _python_, _c_. These are not installed by default, run `make extra` to install them.
 
 - **shellcheck** for shell script linting
 - **shfmt** for shell script formatting
 - **gcc** for C code compilation
-- **clang-format** for C/C++ code formatting
+- **clang-format** for C code formatting
+- **ruff** for python linting and formatting
 
 ## Cheat Sheet
 
@@ -79,8 +82,8 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `Leader + p`             | Jump to previous quickfix list item                  |
 | `Leader + c`             | Open quickfix list                                   |
 | `Leader + t`             | Regenerate tags in working directory                 |
-| `Leader + lr`            | Run filetype: `vim`: source, `sh`: shellcheck        |
-| `Leader + lf`            | Format filetype: `sh`: shfmt                         |
+| `Leader + lr`            | Compile/lint/run based on filetype                   |
+| `Leader + lf`            | Format with external tools based on filetype         |
 | `Leader + U`,`I`,`O`,`Z` | Add a global mark                                    |
 | `Leader + u`,`i`,`o`,`z` | Jump to global mark                                  |
 | `-`                      | Open Netrw (File Explorer)                           |
@@ -91,5 +94,4 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 
 ```shell
 curl -fsSL  https://raw.githubusercontent.com/hrvthzslt/mini-dots/refs/heads/main/install | bash
-curl -fsSL https://raw.githubusercontent.com/hrvthzslt/mini-dots/refs/heads/feat/ece/install | bash
 ```

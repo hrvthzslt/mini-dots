@@ -7,7 +7,7 @@ install: vim-install tmux-install # Install vim and tmux without extra language 
 
 link: vim-link tmux-link scripts-link # Link all config
 
-extra: extra-install # Install extra language tools for shell and c
+extra: extra-install # Install extra language tools for shell, python and c
 
 # vim-install: # Install vim, ctags and man
 # vim-link: # Link vim config
