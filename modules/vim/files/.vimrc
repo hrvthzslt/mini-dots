@@ -121,15 +121,15 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Run/lint files by filetype
-autocmd FileType vim nnoremap <leader>lr :source %<CR>
+autocmd FileType vim nnoremap <leader>ll :source %<CR>
 
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
-autocmd FileType sh nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
+autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
-autocmd FileType python nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
+autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
-autocmd FileType c nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
+autocmd FileType c nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
 " Format files by filetype
 autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
@@ -177,6 +177,12 @@ nnoremap <leader>z 'Z
 
 " Open explorer
 nnoremap - :Explore<CR>
+
+" Ctrl+hjkl to move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Registers and clipboard
 "
