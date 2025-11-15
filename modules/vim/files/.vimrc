@@ -121,25 +121,23 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Run/lint files by filetype
+autocmd FileType vim nnoremap <leader>lr :source %<CR>
+
 autocmd FileType sh setlocal makeprg=cd\ %:p:h\ \&\&\ shellcheck\ -f\ gcc\ -x\ %:t
+autocmd FileType sh nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
+
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
+autocmd FileType python nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
 
-" Map <leader>lr
-nnoremap <silent> <leader>lr :call RunFileByType()<CR><CR><CR>
-
-function! RunFileByType()
-    if &filetype ==# 'vim'
-        execute 'source %'
-    else
-        execute 'make'
-    endif
-endfunction
+autocmd FileType c nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
 
 " Format files by filetype
 autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
 autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+
 autocmd FileType c nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
 autocmd FileType c vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+
 autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 
