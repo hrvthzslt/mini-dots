@@ -3,7 +3,6 @@
 . ../internal
 
 install() {
-  prints "Installing tmux..."
   install_package "tmux"
 }
 

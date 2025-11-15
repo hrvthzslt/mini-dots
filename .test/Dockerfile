@@ -6,7 +6,8 @@ RUN apt-get update && \
 
 RUN useradd -m -s /bin/bash user && \
     echo 'user:password' | chpasswd && \
-    usermod -aG sudo user
+    usermod -aG sudo user && \
+    echo "set -o vi" >> /home/user/.bashrc
 
 WORKDIR /home/user/mini-dots
 

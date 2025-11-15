@@ -3,7 +3,6 @@
 . ../internal
 
 install() {
-  prints "Install tools: shellcheck, shfmt, gcc and clang-format..."
   install_package "shellcheck"
   install_package "shfmt"
   install_package "gcc"
