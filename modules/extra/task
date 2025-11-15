@@ -3,13 +3,14 @@
 . ../internal
 
 install() {
+    echo $1
   install_package "shellcheck"
   install_package "shfmt"
   install_package "gcc"
   install_package "clang-format"
   install_package "pipx"
   prints "Installing ruff..."
-  pipx install ruff >/dev/null
+  pipx install ruff >/dev/null 2>&1
 }
 
 link() {

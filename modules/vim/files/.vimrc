@@ -123,7 +123,7 @@ nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 " Run/lint files by filetype
 autocmd FileType vim nnoremap <leader>lr :source %<CR>
 
-autocmd FileType sh setlocal makeprg=cd\ %:p:h\ \&\&\ shellcheck\ -f\ gcc\ -x\ %:t
+autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
 autocmd FileType sh nnoremap <buffer> <silent> <leader>lr :make<CR><CR><CR>
 
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
