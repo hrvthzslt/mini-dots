@@ -121,7 +121,7 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Run/lint files by filetype
-autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %
+autocmd FileType sh setlocal makeprg=cd\ %:p:h\ \&\&\ shellcheck\ -f\ gcc\ -x\ %:t
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
 
 " Map <leader>lr
