@@ -7,6 +7,9 @@ install() {
   install_package "shfmt"
   install_package "gcc"
   install_package "clang-format"
+  install_package "pipx"
+  prints "Installing ruff..."
+  pipx install ruff >/dev/null
 }
 
 link() {
