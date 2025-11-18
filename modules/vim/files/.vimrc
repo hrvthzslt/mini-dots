@@ -121,7 +121,7 @@ nnoremap gd :call GoToTagOrDefinition()<CR>
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
 " Run/lint files by filetype
-autocmd FileType vim nnoremap <leader>ll :source %<CR>
+autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
 
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
 autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
@@ -161,7 +161,6 @@ augroup searchlist
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost make cwindow
-    autocmd FileType sh autocmd QuickFixCmdPost make cwindow
 augroup END
 
 " Marks

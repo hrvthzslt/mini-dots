@@ -3,7 +3,6 @@
 . ../internal
 
 install() {
-    echo $1
   install_package "shellcheck"
   install_package "shfmt"
   install_package "gcc"
