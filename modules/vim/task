@@ -1,0 +1,16 @@
+#!/bin/sh
+
+. ../internal
+
+install() {
+  install_package "vim"
+  install_package "universal-ctags"
+  install_package "man"
+}
+
+link() {
+  prints "Linking vim config..."
+  ln -sf "$PWD"/files/.vimrc "$HOME"/.vimrc
+}
+
+main "$1"

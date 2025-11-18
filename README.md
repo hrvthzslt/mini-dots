@@ -12,6 +12,8 @@
 - Code navigation (with **ctags** and **grep**)
 - Further easing navigation with **marks** and the **quickfix list**
 - Built-in auto-completion (enhanced with **ctags**) invoked automatically
+- Edit-compile-edit cycle, with **makeprg** and **quickfix list**
+- Language specific formatting
 
 ## Screen Management
 
@@ -26,6 +28,18 @@
 - **POSIX** compliant shell scripts
 - Structured with functions
 - Organized in a **Makefile**
+
+Run `make` to see available commands.
+
+## Extra Language Tools
+
+Edit-compile-edit cycle support for the following languages: _shell_, _python_, _c_. These are not installed by default, run `make extra` to install them.
+
+- **shellcheck** for shell script linting
+- **shfmt** for shell script formatting
+- **gcc** for C code compilation
+- **clang-format** for C code formatting
+- **ruff** for python linting and formatting
 
 ## Cheat Sheet
 
@@ -59,6 +73,7 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `Leader + Q`             | Close all buffers                                    |
 | `Leader + w`             | Write current buffer                                 |
 | `Leader + W`             | Write all buffers                                    |
+| `Ctrl + h/j/k/l`         | Navigate panes                                       |
 | `Leader + sb`            | Switch between open buffers                          |
 | `Leader + sf`            | Search for file                                      |
 | `Leader + sg`            | Search in files                                      |
@@ -68,8 +83,8 @@ Not including defaults, but having some really unnecessary ones. You can judge i
 | `Leader + p`             | Jump to previous quickfix list item                  |
 | `Leader + c`             | Open quickfix list                                   |
 | `Leader + t`             | Regenerate tags in working directory                 |
-| `Leader + lr`            | Run filetype: `vim`: source, `sh`: shellcheck        |
-| `Leader + lf`            | Format filetype: `sh`: shfmt                         |
+| `Leader + ll`            | Compile/lint/run based on filetype                   |
+| `Leader + lf`            | Format with external tools based on filetype         |
 | `Leader + U`,`I`,`O`,`Z` | Add a global mark                                    |
 | `Leader + u`,`i`,`o`,`z` | Jump to global mark                                  |
 | `-`                      | Open Netrw (File Explorer)                           |

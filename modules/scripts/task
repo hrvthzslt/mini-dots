@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./internal
+. ../internal
 
 install() {
   printe "Nothing to install"
@@ -9,10 +9,10 @@ install() {
 link() {
   mkdir -p "$HOME"/.local/bin
 
-  for file in "$PWD"/config/scripts/*; do
+  for file in "$PWD"/files/*; do
     filename=$(basename "$file")
     prints "Linking script: $filename..."
-    ln -sf "$PWD"/config/scripts/"$filename" "$HOME"/.local/bin/"$filename"
+    ln -sf "$PWD"/files/"$filename" "$HOME"/.local/bin/"$filename"
   done
 }
 
