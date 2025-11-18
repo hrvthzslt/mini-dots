@@ -1,9 +1,19 @@
 #!/bin/bash
 set -e
 
+get_sudo() {
+  if command -v sudo >/dev/null 2>&1; then
+    echo "sudo"
+  else
+    echo ""
+  fi
+}
+
 main() {
   echo "Installing dependencies: git and make..."
-  sudo apt install -y git make
+
+  sudo=$(get_sudo)
+  $sudo apt install -y git make
 
   BASE_DIR="$HOME/workspace/personal"
 
