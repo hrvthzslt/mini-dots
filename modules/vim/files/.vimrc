@@ -225,3 +225,6 @@ set shortmess+=F
 " Man page
 nnoremap K K<CR>
 vnoremap K K<CR>
+
+" Exit terminal insert mode with Esc
+tnoremap <Esc> <C-\><C-n>
