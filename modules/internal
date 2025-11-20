@@ -31,16 +31,21 @@ get_sudo() {
   fi
 }
 
-install_package() {
-  prints "Installing $1..."
-  sudo=$(get_sudo)
-  is_debian && $sudo apt-get install -y "$1" >/dev/null
-}
-
 is_debian() {
   if command -v apt >/dev/null 2>&1; then
     return 0
   else
     return 1
+  fi
+}
+
+install_package() {
+  prints "Installing $1..."
+  sudo=$(get_sudo)
+  if is_debian; then
+    $sudo apt-get install -y "$1" >/dev/null
+  else
+    printe "No supported package manager found."
+    exit 1
   fi
 }
