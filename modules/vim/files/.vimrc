@@ -124,7 +124,7 @@ nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
 
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
-autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
 
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
 autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
