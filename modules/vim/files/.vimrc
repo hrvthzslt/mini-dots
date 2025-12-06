@@ -46,6 +46,9 @@ function! OpenCompletion()
 endfunction
 autocmd InsertCharPre * call OpenCompletion()
 
+autocmd FileType * setlocal omnifunc=syntaxcomplete#Complete
+inoremap <C-o> <C-x><C-o>
+
 " Set ignorecase and smartcase
 set ignorecase
 set smartcase
