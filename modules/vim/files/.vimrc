@@ -132,14 +132,14 @@ autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
 autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
 autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
-autocmd FileType c nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
 " Format files by filetype
 autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
 autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
 
-autocmd FileType c nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
-autocmd FileType c vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+autocmd FileType c,cpp nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
 
 autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
