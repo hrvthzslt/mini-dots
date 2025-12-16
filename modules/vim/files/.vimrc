@@ -23,6 +23,9 @@ set nowrap
 set number
 set relativenumber
 
+" Allow buffers to be hidden, ergo switch buffers without saving
+set hidden
+
 " Search subfolders
 set path=**
 

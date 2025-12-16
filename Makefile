@@ -9,8 +9,6 @@ link: vim-link tmux-link scripts-link # Link all config
 
 extra: extra-install # Install extra language tools for shell, python and c
 
-MODULES := vim tmux scripts extra
-
 %-install:
 	@cd modules/$* && ./task install
 
