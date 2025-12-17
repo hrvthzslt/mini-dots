@@ -199,28 +199,28 @@ nnoremap <leader>ff :windo diffthis<CR>
 nnoremap <leader>fo :windo diffoff<CR>
 
 " Mapping for "c" and "C"
-nnoremap c "cc
-vnoremap c "cc
-nnoremap C "cC
-vnoremap C "cC
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
 
 " Mapping for "d" and "D"
-nnoremap d "dd
-vnoremap d "dd
-nnoremap D "dD
-vnoremap D "dD
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
 
 " Mapping for "x" and "X"
-nnoremap x "xx
-vnoremap x "xx
-nnoremap X "xX
-vnoremap X "xX
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
 
 " Mapping for "s" and "S"
-nnoremap s "ss
-vnoremap s "ss
-nnoremap S "sS
-vnoremap S "sS
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
 
 " Should not do it but it annoys me
 set noswapfile
