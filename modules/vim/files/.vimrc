@@ -234,3 +234,17 @@ vnoremap K K<CR>
 
 " Exit terminal insert mode with Esc
 tnoremap <Esc> <C-\><C-n>
+
+" Function to source local .vimrc if it exists
+function! SourceLocalVimrc()
+    if filereadable(getcwd() . '/.vimrc')
+        execute 'source ' . fnameescape(getcwd() . '/.vimrc')
+        echo "Sourced local .vimrc"
+    endif
+endfunction
+
+" Automatically source local .vimrc on startup and when changing directories
+augroup local_vimrc
+    autocmd!
+    autocmd VimEnter * call SourceLocalVimrc()
+augroup END
