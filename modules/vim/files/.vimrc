@@ -232,9 +232,6 @@ set shortmess+=F
 nnoremap K K<CR>
 vnoremap K K<CR>
 
-" Exit terminal insert mode with Esc
-tnoremap <Esc> <C-\><C-n>
-
 " Function to source local .vimrc if it exists
 function! SourceLocalVimrc()
     if filereadable(getcwd() . '/.vimrc')
