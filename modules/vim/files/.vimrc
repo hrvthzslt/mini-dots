@@ -235,8 +235,8 @@ vnoremap K K<CR>
 " Function to source local .vimrc if it exists
 function! SourceLocalVimrc()
     if filereadable(getcwd() . '/.vimrc')
-        execute 'source ' . fnameescape(getcwd() . '/.vimrc')
-        echo "Sourced local .vimrc"
+        execute 'source ' . fnameescape(getcwd() . '/.vimrc.local')
+        echo "Sourced local .vimrc.local"
     endif
 endfunction
 
