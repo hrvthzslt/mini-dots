@@ -1,6 +1,11 @@
+" -----------------------------------------------------------------------------
+" General options
+" -----------------------------------------------------------------------------
+
+" Disable compatibility with vi
 set nocompatible
 
-" enable syntax highlighting
+" Enable syntax highlighting
 syntax enable
 filetype plugin on
 
@@ -23,8 +28,106 @@ set nowrap
 set number
 set relativenumber
 
+" Confirm before writing or abandoning a modified buffer
+set confirm
+
 " Allow buffers to be hidden, ergo switch buffers without saving
 set hidden
+
+" Move cursor with split
+set splitbelow
+set splitright
+
+" Set scrolloff and sidescrolloff
+set scrolloff=8
+set sidescrolloff=5
+
+" Set colorcolumn
+set colorcolumn=120
+
+" Disable folding by default
+set nofoldenable
+
+" Status bar
+set laststatus=2
+
+" Should not do it but it annoys me
+set noswapfile
+
+" Skip shell and completion messages
+set shortmess+=Fc
+
+" Colors for pmenu
+hi Pmenu ctermbg=white guibg=white
+hi PmenuSel ctermbg=yellow guibg=yellow
+
+" -----------------------------------------------------------------------------
+" General mappings
+" -----------------------------------------------------------------------------
+
+" Map k and j to move by terminal rows
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
+" Reselect visual selection after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" Maintain cursor position when yanking a visual selection
+vnoremap y y`]
+
+" Paste replace visual selection without copying it
+vnoremap p "_dP
+
+" Send cut, delete, change, and substitute to void register
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
+
+" Ctrl+hjkl to move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Exit terminal insert mode
+tnoremap <C-x> <C-\><C-n>
+
+" Set leader and local leader
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+
+" Clear search highlighting
+nnoremap <leader>k :nohlsearch<CR>
+
+" Close buffers
+nnoremap <leader>q :bd<CR>
+nnoremap <leader>Q :%bd<CR>
+
+" Save buffers
+nnoremap <leader>w :w<CR>
+nnoremap <leader>W :wa<CR>
+
+" Diff
+nnoremap <leader>ff :windo diffthis<CR>
+nnoremap <leader>fo :windo diffoff<CR>
+
+" -----------------------------------------------------------------------------
+" File navigation
+" -----------------------------------------------------------------------------
 
 " Search subfolders
 set path=**
@@ -36,10 +139,54 @@ set wildmode=longest:full,full
 set wildignorecase
 set wildignore=tags
 
+nnoremap <leader>sb :b<Space>
+nnoremap <leader>sf :find<Space>
+
+" Marks
+nnoremap <leader>U mU
+nnoremap <leader>I mI
+nnoremap <leader>O mO
+nnoremap <leader>Z mZ
+
+nnoremap <leader>u 'U
+nnoremap <leader>i 'I
+nnoremap <leader>o 'O
+nnoremap <leader>z 'Z
+
+" Open explorer
+nnoremap - :Explore<CR>
+
+" -----------------------------------------------------------------------------
+" Code navigation
+" -----------------------------------------------------------------------------
+
+" Search and tags
+nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
+nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
+
+function! GoToTagOrDefinition()
+    try
+        execute 'tag ' . expand('<cword>')
+    catch
+        execute 'normal! gd'
+    endtry
+endfunction
+nnoremap gd :call GoToTagOrDefinition()<CR>
+
+nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
+
+" -----------------------------------------------------------------------------
+" Auto-completion
+" -----------------------------------------------------------------------------
+
 " Set completion options
 set completeopt=menuone,longest,preview,noselect,noinsert
 set complete=.,t,w,b,u
 function! OpenCompletion()
+    " Only trigger in file buffers
+    if &buftype == 'nofile'
+        return
+    endif
     try
         if !pumvisible()
             call feedkeys("\<C-n>", "n")
@@ -56,75 +203,13 @@ inoremap <C-o> <C-x><C-o>
 set ignorecase
 set smartcase
 
-" Move cursor with split
-set splitbelow
-set splitright
+" -----------------------------------------------------------------------------
+" Programming support
+" -----------------------------------------------------------------------------
 
-" Set scrolloff and sidescrolloff
-set scrolloff=8
-set sidescrolloff=5
-
-" Confirm before writing or abandoning a modified buffer
-set confirm
-
-" Set colorcolumn
-set colorcolumn=120
-
-" Disable folding by default
-set nofoldenable
-
-" Status bar
-set laststatus=2
-
-" Colors
-hi Pmenu ctermbg=white guibg=white
-hi PmenuSel ctermbg=yellow guibg=yellow
-
-" Set leader and local leader
-let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
-
-" Map k and j to move by terminal rows
-nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
-nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-
-" Reselect visual selection after indenting
-vnoremap < <gv
-vnoremap > >gv
-
-" Maintain cursor position when yanking a visual selection
-vnoremap y y`]
-
-" Paste replace visual selection without copying it
-vnoremap p "_dP
-
-" Clear search highlighting
-nnoremap <leader>k :nohlsearch<CR>
-
-" Close buffers
-nnoremap <leader>q :bd<CR>
-nnoremap <leader>Q :%bd<CR>
-
-" Save buffers
-nnoremap <leader>w :w<CR>
-nnoremap <leader>W :wa<CR>
-
-" Search and tags
-nnoremap <leader>sb :b<Space>
-nnoremap <leader>sf :find<Space>
-nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
-nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
-
-function! GoToTagOrDefinition()
-    try
-        execute 'tag ' . expand('<cword>')
-    catch
-        execute 'normal! gd'
-    endtry
-endfunction
-nnoremap gd :call GoToTagOrDefinition()<CR>
-
-nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
+" Man page
+nnoremap K K<CR>
+vnoremap K K<CR>
 
 " Run/lint files by filetype
 autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
@@ -169,73 +254,11 @@ augroup searchlist
     autocmd QuickFixCmdPost make cwindow
 augroup END
 
-" Marks
-nnoremap <leader>U mU
-nnoremap <leader>I mI
-nnoremap <leader>O mO
-nnoremap <leader>Z mZ
+" -----------------------------------------------------------------------------
+" Override with local conf
+" -----------------------------------------------------------------------------
 
-nnoremap <leader>u 'U
-nnoremap <leader>i 'I
-nnoremap <leader>o 'O
-nnoremap <leader>z 'Z
-
-" Open explorer
-nnoremap - :Explore<CR>
-
-" Ctrl+hjkl to move between splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Registers and clipboard
-"
-" Use system clipboard
-set clipboard+=unnamed
-
-" Diff
-nnoremap <leader>ff :windo diffthis<CR>
-nnoremap <leader>fo :windo diffoff<CR>
-
-" Mapping for "c" and "C"
-nnoremap c "_c
-vnoremap c "_c
-nnoremap C "_C
-vnoremap C "_C
-
-" Mapping for "d" and "D"
-nnoremap d "_d
-vnoremap d "_d
-nnoremap D "_D
-vnoremap D "_D
-
-" Mapping for "x" and "X"
-nnoremap x "_x
-vnoremap x "_x
-nnoremap X "_X
-vnoremap X "_X
-
-" Mapping for "s" and "S"
-nnoremap s "_s
-vnoremap s "_s
-nnoremap S "_S
-vnoremap S "_S
-
-" Should not do it but it annoys me
-set noswapfile
-
-" Do not prompt with 'Press ENTER...' after shell commands
-set shortmess+=F
-
-" Man page
-nnoremap K K<CR>
-vnoremap K K<CR>
-
-" Exit terminal insert mode with Esc
-tnoremap <C-x> <C-\><C-n>
-
-" Function to source local .vimrc if it exists
+" Function to source local .vimrc.local if it exists
 function! SourceLocalVimrc()
     let l:local_vimrc_path = getcwd() . '/.vimrc.local'
     if filereadable(l:local_vimrc_path)
@@ -244,7 +267,7 @@ function! SourceLocalVimrc()
     endif
 endfunction
 
-" Automatically source local .vimrc on startup and when changing directories
+" Automatically source local .vimrc.local on startup and when changing directories
 augroup local_vimrc
     autocmd!
     autocmd VimEnter * call SourceLocalVimrc()
