@@ -237,9 +237,10 @@ tnoremap <C-x> <C-\><C-n>
 
 " Function to source local .vimrc if it exists
 function! SourceLocalVimrc()
-    if filereadable(getcwd() . '/.vimrc')
-        execute 'source ' . fnameescape(getcwd() . '/.vimrc.local')
-        echo "Sourced local .vimrc.local"
+    let l:local_vimrc_path = getcwd() . '/.vimrc.local'
+    if filereadable(l:local_vimrc_path)
+        execute 'source ' . fnameescape(l:local_vimrc_path)
+        echo "Sourced " . l:local_vimrc_path
     endif
 endfunction
 
