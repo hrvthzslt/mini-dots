@@ -1,6 +1,11 @@
+" -----------------------------------------------------------------------------
+" General options
+" -----------------------------------------------------------------------------
+
+" Disable compatibility with vi
 set nocompatible
 
-" enable syntax highlighting
+" Enable syntax highlighting
 syntax enable
 filetype plugin on
 
@@ -13,7 +18,7 @@ set softtabstop=4
 " Highlight search results
 set hlsearch
 
-" Enable smartindent
+" Smart indentation when starting a new line
 set smartindent
 
 " Disable text wrapping
@@ -23,38 +28,11 @@ set nowrap
 set number
 set relativenumber
 
+" Confirm before writing or abandoning a modified buffer
+set confirm
+
 " Allow buffers to be hidden, ergo switch buffers without saving
 set hidden
-
-" Search subfolders
-set path=**
-
-" Set wildmode
-set wildmenu
-set wildoptions=pum
-set wildmode=longest:full,full
-set wildignorecase
-set wildignore=tags
-
-" Set completion options
-set completeopt=menuone,longest,preview,noselect,noinsert
-set complete=.,t,w,b,u
-function! OpenCompletion()
-    try
-        if !pumvisible()
-            call feedkeys("\<C-n>", "n")
-        endif
-    catch
-    endtry
-endfunction
-autocmd InsertCharPre * call OpenCompletion()
-
-autocmd FileType * setlocal omnifunc=syntaxcomplete#Complete
-inoremap <C-o> <C-x><C-o>
-
-" Set ignorecase and smartcase
-set ignorecase
-set smartcase
 
 " Move cursor with split
 set splitbelow
@@ -64,25 +42,28 @@ set splitright
 set scrolloff=8
 set sidescrolloff=5
 
-" Confirm before writing or abandoning a modified buffer
-set confirm
-
-" Set colorcolumn
+" Line length marker at 120 characters
 set colorcolumn=120
 
 " Disable folding by default
 set nofoldenable
 
-" Status bar
+" Always show status line
 set laststatus=2
 
-" Colors
+" Should not do it but it annoys me
+set noswapfile
+
+" Skip shell and completion messages
+set shortmess+=Fc
+
+" Colors for pmenu
 hi Pmenu ctermbg=white guibg=white
 hi PmenuSel ctermbg=yellow guibg=yellow
 
-" Set leader and local leader
-let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
+" -----------------------------------------------------------------------------
+" General mappings
+" -----------------------------------------------------------------------------
 
 " Map k and j to move by terminal rows
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
@@ -98,6 +79,37 @@ vnoremap y y`]
 " Paste replace visual selection without copying it
 vnoremap p "_dP
 
+" Send cut, delete, change, and substitute to void register
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
+
+" Ctrl+hjkl to move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Exit terminal insert mode
+tnoremap <C-x> <C-\><C-n>
+
+" Set leader and local leader for further mappings
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+
 " Clear search highlighting
 nnoremap <leader>k :nohlsearch<CR>
 
@@ -109,26 +121,114 @@ nnoremap <leader>Q :%bd<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :wa<CR>
 
-" Search and tags
+" Show diff between panes
+nnoremap <leader>ff :windo diffthis<CR>
+nnoremap <leader>fo :windo diffoff<CR>
+
+" -----------------------------------------------------------------------------
+" File navigation
+" -----------------------------------------------------------------------------
+
+" Search in current path recursively
+set path=**
+
+" Set wildmode for command menu completion
+set wildmenu
+set wildoptions=pum
+set wildmode=longest:full,full
+set wildignorecase
+set wildignore=tags
+
+" Search and open buffers
 nnoremap <leader>sb :b<Space>
+" Search and open files in path
 nnoremap <leader>sf :find<Space>
+
+" Marks for quick navigation and bookmarking
+nnoremap <leader>U mU
+nnoremap <leader>I mI
+nnoremap <leader>O mO
+nnoremap <leader>Z mZ
+
+nnoremap <leader>u 'U
+nnoremap <leader>i 'I
+nnoremap <leader>o 'O
+nnoremap <leader>z 'Z
+
+" Open file explorer
+nnoremap - :Explore<CR>
+
+" -----------------------------------------------------------------------------
+" Code navigation
+" -----------------------------------------------------------------------------
+
+" Search in files
 nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
+" Search for current word under cursor
 nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
 
-function! GoToTagOrDefinition()
+" Go to tag if present, else go to local declaration
+function! GoToTagOrDeclaration()
     try
         execute 'tag ' . expand('<cword>')
     catch
         execute 'normal! gd'
     endtry
 endfunction
-nnoremap gd :call GoToTagOrDefinition()<CR>
+nnoremap gd :call GoToTagOrDeclaration()<CR>
 
+" Generate tags file with ctags
 nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
 
-" Run/lint files by filetype
+" -----------------------------------------------------------------------------
+" Auto-completion
+" -----------------------------------------------------------------------------
+
+" Set completion options
+set completeopt=menuone,longest,preview,noselect,noinsert
+set complete=.,t,w,b,u
+
+" Open completion menu automatically while typing
+function! OpenCompletion()
+    " Only trigger in file buffers
+    if &buftype == 'nofile'
+        return
+    endif
+    try
+        if !pumvisible()
+            call feedkeys("\<C-n>", "n")
+        endif
+    catch
+    endtry
+endfunction
+autocmd InsertCharPre * call OpenCompletion()
+
+" Enable and map omnifunc for all filetypes
+autocmd FileType * setlocal omnifunc=syntaxcomplete#Complete
+inoremap <C-o> <C-x><C-o>
+
+" Ignore case in completion unless uppercase letters are used
+set ignorecase
+set smartcase
+
+" -----------------------------------------------------------------------------
+" Programming support
+" -----------------------------------------------------------------------------
+
+" Easy access to man pages
+nnoremap K K<CR>
+vnoremap K K<CR>
+
+" Run makeprg with make
+nnoremap <silent> <leader>ll :make<CR>
+
+" Source vim config instead of make
 autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
 
+" Rune makeprg for c/cpp files
+autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+
+" Makeprg per filetype
 autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
 autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
 
@@ -147,6 +247,7 @@ autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clan
 autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 
+" Function to format with cursor position preserved
 function! FormatWithCursor(cmd) range
     let l:save_cursor = getpos(".")
     if a:firstline == a:lastline
@@ -157,7 +258,7 @@ function! FormatWithCursor(cmd) range
     call setpos('.', l:save_cursor)
 endfunction
 
-" Fixlist
+" Fixlist nacigation mappings
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprev<CR>
 nnoremap <leader>c :copen<CR>
@@ -169,73 +270,11 @@ augroup searchlist
     autocmd QuickFixCmdPost make cwindow
 augroup END
 
-" Marks
-nnoremap <leader>U mU
-nnoremap <leader>I mI
-nnoremap <leader>O mO
-nnoremap <leader>Z mZ
+" -----------------------------------------------------------------------------
+" Override with local conf
+" -----------------------------------------------------------------------------
 
-nnoremap <leader>u 'U
-nnoremap <leader>i 'I
-nnoremap <leader>o 'O
-nnoremap <leader>z 'Z
-
-" Open explorer
-nnoremap - :Explore<CR>
-
-" Ctrl+hjkl to move between splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Registers and clipboard
-"
-" Use system clipboard
-set clipboard+=unnamed
-
-" Diff
-nnoremap <leader>ff :windo diffthis<CR>
-nnoremap <leader>fo :windo diffoff<CR>
-
-" Mapping for "c" and "C"
-nnoremap c "_c
-vnoremap c "_c
-nnoremap C "_C
-vnoremap C "_C
-
-" Mapping for "d" and "D"
-nnoremap d "_d
-vnoremap d "_d
-nnoremap D "_D
-vnoremap D "_D
-
-" Mapping for "x" and "X"
-nnoremap x "_x
-vnoremap x "_x
-nnoremap X "_X
-vnoremap X "_X
-
-" Mapping for "s" and "S"
-nnoremap s "_s
-vnoremap s "_s
-nnoremap S "_S
-vnoremap S "_S
-
-" Should not do it but it annoys me
-set noswapfile
-
-" Do not prompt with 'Press ENTER...' after shell commands
-set shortmess+=F
-
-" Man page
-nnoremap K K<CR>
-vnoremap K K<CR>
-
-" Exit terminal insert mode with Esc
-tnoremap <C-x> <C-\><C-n>
-
-" Function to source local .vimrc if it exists
+" Function to source local .vimrc.local if it exists
 function! SourceLocalVimrc()
     let l:local_vimrc_path = getcwd() . '/.vimrc.local'
     if filereadable(l:local_vimrc_path)
@@ -244,7 +283,7 @@ function! SourceLocalVimrc()
     endif
 endfunction
 
-" Automatically source local .vimrc on startup and when changing directories
+" Automatically source local .vimrc.local on startup and when changing directories
 augroup local_vimrc
     autocmd!
     autocmd VimEnter * call SourceLocalVimrc()
