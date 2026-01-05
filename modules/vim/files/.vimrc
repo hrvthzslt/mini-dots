@@ -144,19 +144,38 @@ nnoremap <leader>sb :b<Space>
 " Search and open files in path
 nnoremap <leader>sf :find<Space>
 
+" Alternate file
+nnoremap <leader>j :e #<CR>
+
+" Open file explorer
+nnoremap - :Explore<CR>
+
 " Marks for quick navigation and bookmarking
-nnoremap <leader>U mU
-nnoremap <leader>I mI
-nnoremap <leader>O mO
-nnoremap <leader>Z mZ
+nnoremap <leader>U mU :echo "Mark U set"<CR>
+nnoremap <leader>I mI :echo "Mark I set"<CR>
+nnoremap <leader>O mO :echo "Mark O set"<CR>
+nnoremap <leader>Z mZ :echo "Mark Z set"<CR>
+nnoremap <leader>Y mZ :echo "Mark Y set"<CR>
 
 nnoremap <leader>u 'U
 nnoremap <leader>i 'I
 nnoremap <leader>o 'O
 nnoremap <leader>z 'Z
+nnoremap <leader>y 'Z
 
-" Open file explorer
-nnoremap - :Explore<CR>
+" Automatically update custom marks (U, I, O, Z) to current cursor position on buffer leave
+function! UpdateCustomMarks()
+    for mark in ['U', 'I', 'O', 'Z']
+        let l:markpos = getpos("'" . mark)
+        if l:markpos[0] == bufnr('') && l:markpos[1] > 0
+            execute 'normal! m' . mark
+        endif
+    endfor
+endfunction
+augroup update_custom_marks_on_leave
+    autocmd!
+    autocmd BufLeave * call UpdateCustomMarks()
+augroup END
 
 " -----------------------------------------------------------------------------
 " Code navigation
@@ -238,16 +257,6 @@ autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
 " Format files by filetype
-autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
-autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
-
-autocmd FileType c,cpp nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
-autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
-
-autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
-autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
-
-" Function to format with cursor position preserved
 function! FormatWithCursor(cmd) range
     let l:save_cursor = getpos(".")
     if a:firstline == a:lastline
@@ -257,6 +266,15 @@ function! FormatWithCursor(cmd) range
     endif
     call setpos('.', l:save_cursor)
 endfunction
+
+autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+
+autocmd FileType c,cpp nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+
+autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
+autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
 
 " Fixlist nacigation mappings
 nnoremap <leader>n :cnext<CR>
@@ -274,7 +292,7 @@ augroup END
 " Override with local conf
 " -----------------------------------------------------------------------------
 
-" Function to source local .vimrc.local if it exists
+" Automatically source local .vimrc.local on startup and when changing directories
 function! SourceLocalVimrc()
     let l:local_vimrc_path = getcwd() . '/.vimrc.local'
     if filereadable(l:local_vimrc_path)
@@ -282,8 +300,6 @@ function! SourceLocalVimrc()
         echo "Sourced " . l:local_vimrc_path
     endif
 endfunction
-
-" Automatically source local .vimrc.local on startup and when changing directories
 augroup local_vimrc
     autocmd!
     autocmd VimEnter * call SourceLocalVimrc()
