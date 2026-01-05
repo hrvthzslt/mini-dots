@@ -172,7 +172,7 @@ function! UpdateCustomMarks()
         endif
     endfor
 endfunction
-augroup update_custom_marks_on_leave
+augroup mark_cursor_persistence
     autocmd!
     autocmd BufLeave * call UpdateCustomMarks()
 augroup END
@@ -220,11 +220,17 @@ function! OpenCompletion()
     catch
     endtry
 endfunction
-autocmd InsertCharPre * call OpenCompletion()
+augroup auto_completion
+    autocmd!
+    autocmd InsertCharPre * call OpenCompletion()
+augroup END
 
 " Enable and map omnifunc for all filetypes
-autocmd FileType * setlocal omnifunc=syntaxcomplete#Complete
-inoremap <C-o> <C-x><C-o>
+augroup omnifunc_setup
+    autocmd!
+    autocmd FileType * setlocal omnifunc=syntaxcomplete#Complete
+    inoremap <C-o> <C-x><C-o>
+augroup END
 
 " Ignore case in completion unless uppercase letters are used
 set ignorecase
@@ -241,20 +247,24 @@ vnoremap K K<CR>
 " Run makeprg with make
 nnoremap <silent> <leader>ll :make<CR>
 
-" Source vim config instead of make
-autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
+augroup ece_cycle
+    autocmd!
 
-" Rune makeprg for c/cpp files
-autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+    " Source vim config instead of make
+    autocmd FileType vim nnoremap <buffer> <leader>ll :source %<CR>
 
-" Makeprg per filetype
-autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
-autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
+    " Rune makeprg for c/cpp files
+    autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 
-autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
-autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+    " Makeprg per filetype
+    autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
+    autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
 
-autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+    autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
+    autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+
+    autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
+augroup END
 
 " Format files by filetype
 function! FormatWithCursor(cmd) range
@@ -267,14 +277,17 @@ function! FormatWithCursor(cmd) range
     call setpos('.', l:save_cursor)
 endfunction
 
-autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
-autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+augroup external_formatters
+    autocmd!
+    autocmd FileType sh nnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
+    autocmd FileType sh vnoremap <buffer> <leader>lf :call FormatWithCursor('shfmt -i 2 -ci')<CR>
 
-autocmd FileType c,cpp nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
-autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+    autocmd FileType c,cpp nnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
+    autocmd FileType c,cpp vnoremap <buffer> <leader>lf :call FormatWithCursor('clang-format')<CR>
 
-autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
-autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
+    autocmd FileType python nnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
+    autocmd FileType python vnoremap <buffer> <leader>lf :call FormatWithCursor('ruff format -')<CR>
+augroup END
 
 " Fixlist nacigation mappings
 nnoremap <leader>n :cnext<CR>
