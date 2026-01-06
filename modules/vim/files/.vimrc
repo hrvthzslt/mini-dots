@@ -186,7 +186,7 @@ augroup END
 nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
 
 " Search for current word under cursor
-function! SearchCurrentWordByFileType()
+function! SearchForReferences()
     let l:ext = expand('%:e')
     if l:ext == ''
         let l:glob = '{**/*,**/.*}'
@@ -195,10 +195,10 @@ function! SearchCurrentWordByFileType()
     else
         let l:glob = '**/*.' . l:ext
     endif
-    execute 'vimgrep /' . expand('<cword>') . '/gj ' . l:glob
+    execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/gj ' . l:glob
     copen
 endfunction
-nnoremap gr :call SearchCurrentWordByFileType()<CR>
+nnoremap gr :call SearchForReferences()<CR>
 " nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
 
 " Go to tag if present, else go to local declaration
