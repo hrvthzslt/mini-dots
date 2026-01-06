@@ -79,23 +79,24 @@ vnoremap y y`]
 " Paste replace visual selection without copying it
 vnoremap p "_dP
 
-" Send cut, delete, change, and substitute to void register
-nnoremap c "_c
-vnoremap c "_c
-nnoremap C "_C
-vnoremap C "_C
-nnoremap d "_d
-vnoremap d "_d
-nnoremap D "_D
-vnoremap D "_D
-nnoremap x "_x
-vnoremap x "_x
-nnoremap X "_X
-vnoremap X "_X
-nnoremap s "_s
-vnoremap s "_s
-nnoremap S "_S
-vnoremap S "_S
+" Send cut, delete, change, and substitute to named registers
+nnoremap c "cc
+nnoremap cc "ccc
+vnoremap c "cc
+nnoremap C "cC
+nnoremap d "dd
+nnoremap dd "ddd
+vnoremap d "dd
+nnoremap D "dD
+vnoremap D "dD
+nnoremap x "xx
+vnoremap x "xx
+nnoremap X "xX
+vnoremap X "xX
+nnoremap s "ss
+vnoremap s "ss
+nnoremap S "sS
+vnoremap S "sS
 
 " Ctrl+hjkl to move between splits
 nnoremap <C-h> <C-w>h
