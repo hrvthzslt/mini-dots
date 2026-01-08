@@ -164,6 +164,8 @@ nnoremap <leader>o 'O
 nnoremap <leader>z 'Z
 nnoremap <leader>y 'Z
 
+nnoremap <leader>h :delmarks U I O Z<CR>:echo "Marks U I O Z deleted"<CR>
+
 " Automatically update custom marks (U, I, O, Z) to current cursor position on buffer leave
 function! UpdateCustomMarks()
     for mark in ['U', 'I', 'O', 'Z']
