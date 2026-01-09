@@ -105,7 +105,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Exit terminal insert mode
-tnoremap <C-x> <C-\><C-n>
+silent! tnoremap <C-x> <C-\><C-n>
 
 " Set leader and local leader for further mappings
 let mapleader = "\<Space>"
@@ -135,7 +135,7 @@ set path=**
 
 " Set wildmode for command menu completion
 set wildmenu
-set wildoptions=pum
+silent! set wildoptions=pum
 set wildmode=longest:full,full
 set wildignorecase
 set wildignore=tags
@@ -191,9 +191,9 @@ nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
 function! SearchForReferences()
     let l:ext = expand('%:e')
     if l:ext == ''
-        let l:glob = '{**/*,**/.*}'
+        let l:glob = '**/* **/.*'
     elseif l:ext == 'c' || l:ext == 'h'
-        let l:glob = '**/*.{c,h}'
+        let l:glob = '**/*.c **/*.h'
     else
         let l:glob = '**/*.' . l:ext
     endif
