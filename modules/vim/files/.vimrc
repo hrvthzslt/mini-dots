@@ -55,9 +55,9 @@ set laststatus=2
 set noswapfile
 
 " Skip shell and completion messages
-set shortmess+=Fc
+silent! set shortmess+=Fc
 
-" Colors for pmenu
+" Colors
 hi Pmenu ctermbg=white guibg=white
 hi PmenuSel ctermbg=yellow guibg=yellow
 
@@ -214,14 +214,22 @@ endfunction
 nnoremap gd :call GoToTagOrDeclaration()<CR>
 
 " Generate tags file with ctags
-nnoremap <leader>t :execute '!ctags -R .'<CR><CR>:echo "Tags regenerated"<CR>
+function! TagsGen()
+    let l:out = system('ctags -R . && echo "Tags generated."')
+    echom l:out
+endfunction
+nnoremap <leader>t :call TagsGen()<CR>
 
 " -----------------------------------------------------------------------------
 " Auto-completion
 " -----------------------------------------------------------------------------
 
 " Set completion options
-set completeopt=menuone,longest,preview,noselect,noinsert
+if v:version >= 800
+    set completeopt=menuone,longest,preview,noselect,noinsert
+else
+    set completeopt=menuone,longest
+endif
 set complete=.,t,w,b,u
 
 " Open completion menu automatically while typing
@@ -239,7 +247,9 @@ function! OpenCompletion()
 endfunction
 augroup auto_completion
     autocmd!
-    autocmd InsertCharPre * call OpenCompletion()
+    if v:version >= 800
+        autocmd InsertCharPre * call OpenCompletion()
+    endif
 augroup END
 
 " Enable and map omnifunc for all filetypes
