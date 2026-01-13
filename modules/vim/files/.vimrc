@@ -185,7 +185,7 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " Search in files
-nnoremap <leader>sg :vimgrep // **<Left><Left><Left><Left>
+nnoremap <leader>sg :vimgrep //g **<Left><Left><Left><Left><Left>
 
 " Search for current word under cursor
 function! SearchForReferences()
@@ -197,7 +197,7 @@ function! SearchForReferences()
     else
         let l:glob = '**/*.' . l:ext
     endif
-    execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/gj ' . l:glob
+    execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/g ' . l:glob
     copen
 endfunction
 nnoremap gr :call SearchForReferences()<CR>
