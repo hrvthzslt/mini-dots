@@ -16,9 +16,7 @@ RUN echo "set -o vi" >> /home/user/.bashrc && \
 WORKDIR /home/user
 
 RUN git clone https://github.com/hrvthzslt/sysperc && \
-    git clone https://github.com/hrvthzslt/palindrome && \
-    git clone https://github.com/hrvthzslt/transloth && \
-    git clone https://github.com/hrvthzslt/fortune-server
+    git clone https://github.com/hrvthzslt/markdown-server-flask
 
 WORKDIR /home/user/mini-dots
 
