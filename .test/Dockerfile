@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y sudo make git tree cloc dialog apt-utils ncurses-term bash-completion
+    apt-get install -y sudo curl make git tree cloc dialog apt-utils ncurses-term bash-completion cbonsai
 
 RUN useradd -m -s /bin/bash user && \
     echo 'user:pass' | chpasswd && \
