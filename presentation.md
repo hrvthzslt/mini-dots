@@ -1,6 +1,6 @@
-# Minimalist CLI Development Environment
+# Minimalist CLI Dev Environment
 
-(Spoiler: Vim and Tmux without any plugins)
+(Vim and Tmux, no plugins)
 
 ## IDE Expectations
 
