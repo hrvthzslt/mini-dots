@@ -142,8 +142,25 @@ set wildignore=tags
 
 " Search and open buffers
 nnoremap <leader>sb :b<Space>
+
 " Search and open files in path
-nnoremap <leader>sf :find<Space>
+if executable('fzf')
+    function! FzfFind() abort
+        let l:tmp = tempname()
+        silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
+        redraw!
+        if !filereadable(l:tmp) | return | endif
+        let l:choice = readfile(l:tmp)
+        call delete(l:tmp)
+        if !empty(l:choice)
+            execute 'edit' fnameescape(l:choice[0])
+        endif
+    endfunction
+
+    nnoremap <leader>sf :call FzfFind()<CR>
+else
+  nnoremap <leader>sf :find<Space>
+endif
 
 " Alternate file
 nnoremap <leader>j :e #<CR>
@@ -184,24 +201,47 @@ augroup END
 " Code navigation
 " -----------------------------------------------------------------------------
 
-" Search in files
-nnoremap <leader>sg :vimgrep //g **<Left><Left><Left><Left><Left>
+" Use ripgrep for :grep if available
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore
+    set grepformat=%f:%l:%c:%m
 
-" Search for current word under cursor
-function! SearchForReferences()
-    let l:ext = expand('%:e')
-    if l:ext == ''
-        let l:glob = '**/* **/.*'
-    elseif l:ext == 'c' || l:ext == 'h'
-        let l:glob = '**/*.c **/*.h'
-    else
-        let l:glob = '**/*.' . l:ext
-    endif
-    execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/g ' . l:glob
-    copen
-endfunction
+    " Search in files
+    nnoremap <leader>sg :silent grep! \| redraw!<C-Left><C-Left><Left>
+
+    " Search for current word under cursor
+    function! SearchForReferences()
+        let l:ext = expand('%:e')
+        if l:ext == ''
+            let l:glob = ''
+        elseif l:ext == 'c' || l:ext == 'h'
+            let l:glob = '-g "*.c" -g "*.h"'
+        else
+            let l:glob = '-g "*.' . l:ext . '"'
+        endif
+        execute 'silent! grep! -w ' . l:glob . ' -- ' . shellescape(expand('<cword>'))
+        redraw!
+        copen
+    endfunction
+else
+    " Search in files
+    nnoremap <leader>sg :vimgrep //g **<Left><Left><Left><Left><Left>
+
+    " Search for current word under cursor
+    function! SearchForReferences()
+        let l:ext = expand('%:e')
+        if l:ext == ''
+            let l:glob = '**/* **/.*'
+        elseif l:ext == 'c' || l:ext == 'h'
+            let l:glob = '**/*.c **/*.h'
+        else
+            let l:glob = '**/*.' . l:ext
+        endif
+        execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/g ' . l:glob
+        copen
+    endfunction
+endif
 nnoremap gr :call SearchForReferences()<CR>
-" nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
 
 " Go to tag if present, else go to local declaration
 function! GoToTagOrDeclaration()
