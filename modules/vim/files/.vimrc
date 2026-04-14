@@ -2,6 +2,9 @@
 " General options
 " -----------------------------------------------------------------------------
 
+" Enable the usage of fzf and ripgrep if available
+let g:modern_tools=0
+
 " Disable compatibility with vi
 set nocompatible
 
@@ -143,24 +146,29 @@ set wildignore=tags
 " Search and open buffers
 nnoremap <leader>sb :b<Space>
 
-" Search and open files in path
-if executable('fzf')
-    function! FzfFind() abort
-        let l:tmp = tempname()
-        silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
-        redraw!
-        if !filereadable(l:tmp) | return | endif
-        let l:choice = readfile(l:tmp)
-        call delete(l:tmp)
-        if !empty(l:choice)
-            execute 'edit' fnameescape(l:choice[0])
-        endif
-    endfunction
+" Open fzf to search and open files in path
+function! FzfFind() abort
+    let l:tmp = tempname()
+    silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
+    redraw!
+    if !filereadable(l:tmp) | return | endif
+    let l:choice = readfile(l:tmp)
+    call delete(l:tmp)
+    if !empty(l:choice)
+        execute 'edit' fnameescape(l:choice[0])
+    endif
+endfunction
 
-    nnoremap <leader>sf :call FzfFind()<CR>
-else
-  nnoremap <leader>sf :find<Space>
-endif
+" Search and open files in path or open fzf
+function SearchFiles()
+    if executable('fzf') && g:modern_tools
+        call FzfFind()
+    else
+        call feedkeys(":find ", "n")
+    endif
+endfunction
+
+nnoremap <leader>sf :call SearchFiles()<CR>
 
 " Alternate file
 nnoremap <leader>j :e #<CR>
