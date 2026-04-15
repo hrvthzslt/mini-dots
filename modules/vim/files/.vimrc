@@ -3,7 +3,7 @@
 " -----------------------------------------------------------------------------
 
 " Enable the usage of fzf and ripgrep if available
-let g:modern_tools=1
+let g:modern_tools=0
 
 " Disable compatibility with vi
 set nocompatible
