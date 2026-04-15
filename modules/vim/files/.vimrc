@@ -3,7 +3,7 @@
 " -----------------------------------------------------------------------------
 
 " Enable the usage of fzf and ripgrep if available
-let g:modern_tools=0
+let g:modern_tools=1
 
 " Disable compatibility with vi
 set nocompatible
@@ -205,14 +205,15 @@ augroup END
 " -----------------------------------------------------------------------------
 
 " Use ripgrep for :grep if available
-if executable('rg') && g:modern_tools
-    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore
+function! SetGrepPrgToRipGrep()
+    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore\ -g\ '!tags'\ -g\ '!.git'
     set grepformat=%f:%l:%c:%m
-endif
+endfunction
 
 " Search in files
 function! SearchInFiles()
     if executable('rg') && g:modern_tools
+        call SetGrepPrgToRipGrep()
         call feedkeys(":silent grep!  | redraw!\<C-Left>\<C-Left>\<Left>", "n")
     else
         call feedkeys(":vimgrep //g **\<Left>\<Left>\<Left>\<Left>\<Left>", "n")
@@ -223,6 +224,7 @@ nnoremap <leader>sg :call SearchInFiles()<CR>
 " Search for current word under cursor
 function! SearchForReferences()
     if executable('rg') && g:modern_tools
+        call SetGrepPrgToRipGrep()
         let l:ext = expand('%:e')
         if l:ext == ''
             let l:glob = ''
