@@ -2,7 +2,7 @@
 " General options
 " -----------------------------------------------------------------------------
 
-" Enable the usage of fzf and ripgrep if available
+" Enable the usage of fzf and ripgrep when available
 let g:modern_tools=0
 
 " Disable compatibility with vi
@@ -206,7 +206,7 @@ augroup END
 
 " Use ripgrep for :grep if available
 function! SetGrepPrgToRipGrep()
-    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore\ -g\ '!tags'\ -g\ '!.git'
+    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore\ -g\ '!tags'\ -g\ '!.git/**'
     set grepformat=%f:%l:%c:%m
 endfunction
 
