@@ -147,7 +147,7 @@ set wildignore=tags
 nnoremap <leader>sb :b<Space>
 
 " Search and open files in path or open fzf
-function SearchFiles()
+function! SearchFiles()
     if executable('fzf') && g:modern_tools
         let l:tmp = tempname()
         silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
