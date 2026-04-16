@@ -2,6 +2,9 @@
 " General options
 " -----------------------------------------------------------------------------
 
+" Enable the usage of fzf and ripgrep when available
+let g:modern_tools=0
+
 " Disable compatibility with vi
 set nocompatible
 
@@ -142,8 +145,25 @@ set wildignore=tags
 
 " Search and open buffers
 nnoremap <leader>sb :b<Space>
-" Search and open files in path
-nnoremap <leader>sf :find<Space>
+
+" Search and open files in path or open fzf
+function! SearchFiles()
+    if executable('fzf') && g:modern_tools
+        let l:tmp = tempname()
+        silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
+        redraw!
+        if !filereadable(l:tmp) | return | endif
+        let l:choice = readfile(l:tmp)
+        call delete(l:tmp)
+        if !empty(l:choice)
+            execute 'edit' fnameescape(l:choice[0])
+        endif
+    else
+        call feedkeys(":find ", "n")
+    endif
+endfunction
+
+nnoremap <leader>sf :call SearchFiles()<CR>
 
 " Alternate file
 nnoremap <leader>j :e #<CR>
@@ -184,24 +204,52 @@ augroup END
 " Code navigation
 " -----------------------------------------------------------------------------
 
+" Use ripgrep for :grep if available
+function! SetGrepPrgToRipGrep()
+    set grepprg=rg\ --vimgrep\ --hidden\ --no-ignore\ -g\ '!tags'\ -g\ '!.git/**'
+    set grepformat=%f:%l:%c:%m
+endfunction
+
 " Search in files
-nnoremap <leader>sg :vimgrep //g **<Left><Left><Left><Left><Left>
+function! SearchInFiles()
+    if executable('rg') && g:modern_tools
+        call SetGrepPrgToRipGrep()
+        call feedkeys(":silent grep!  | redraw!\<C-Left>\<C-Left>\<Left>", "n")
+    else
+        call feedkeys(":vimgrep //g **\<Left>\<Left>\<Left>\<Left>\<Left>", "n")
+    endif
+endfunction
+nnoremap <leader>sg :call SearchInFiles()<CR>
 
 " Search for current word under cursor
 function! SearchForReferences()
-    let l:ext = expand('%:e')
-    if l:ext == ''
-        let l:glob = '**/* **/.*'
-    elseif l:ext == 'c' || l:ext == 'h'
-        let l:glob = '**/*.c **/*.h'
+    if executable('rg') && g:modern_tools
+        call SetGrepPrgToRipGrep()
+        let l:ext = expand('%:e')
+        if l:ext == ''
+            let l:glob = ''
+        elseif l:ext == 'c' || l:ext == 'h'
+            let l:glob = '-g "*.c" -g "*.h"'
+        else
+            let l:glob = '-g "*.' . l:ext . '"'
+        endif
+        execute 'silent! grep! -w ' . l:glob . ' -- ' . shellescape(expand('<cword>'))
+        redraw!
+        copen
     else
-        let l:glob = '**/*.' . l:ext
+        let l:ext = expand('%:e')
+        if l:ext == ''
+            let l:glob = '**/* **/.*'
+        elseif l:ext == 'c' || l:ext == 'h'
+            let l:glob = '**/*.c **/*.h'
+        else
+            let l:glob = '**/*.' . l:ext
+        endif
+        execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/g ' . l:glob
+        copen
     endif
-    execute 'silent! vimgrep /\C\<' . expand('<cword>') . '\>/g ' . l:glob
-    copen
 endfunction
 nnoremap gr :call SearchForReferences()<CR>
-" nnoremap gr :grep! --binary-files=without-match --exclude=tags --exclude-dir=.git -s "\<<cword>\>" . -r<CR><CR>:copen<CR>
 
 " Go to tag if present, else go to local declaration
 function! GoToTagOrDeclaration()
