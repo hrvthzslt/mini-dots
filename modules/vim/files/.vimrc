@@ -2,9 +2,6 @@
 " General options
 " -----------------------------------------------------------------------------
 
-" Enable the usage of fzf and ripgrep when available
-let g:modern_tools=0
-
 " Disable compatibility with vi
 set nocompatible
 
@@ -63,6 +60,9 @@ silent! set shortmess+=Fc
 " Colors
 hi Pmenu ctermbg=white guibg=white
 hi PmenuSel ctermbg=yellow guibg=yellow
+
+" Enable the usage of fzf and ripgrep when available
+let g:modern_tools=1
 
 " -----------------------------------------------------------------------------
 " General mappings
@@ -148,18 +148,15 @@ set wildignore=tags
 " Search and open buffers
 nnoremap <leader>sb :b<Space>
 
+" runtimepath for vim plugin that is bundled with fzf
+set runtimepath+=/usr/share/doc/fzf/examples,/usr/share/doc/fzf/examples,/data/data/com.termux/files/usr/share/vim/vimfiles
+" fzf command for filtering files
+let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/.git/*"'
+
 " Search and open files in path or open fzf
 function! SearchFiles()
-    if executable('fzf') && g:modern_tools
-        let l:tmp = tempname()
-        silent execute '!find . -type f -not -path "*/.git/*" | fzf > ' . shellescape(l:tmp)
-        redraw!
-        if !filereadable(l:tmp) | return | endif
-        let l:choice = readfile(l:tmp)
-        call delete(l:tmp)
-        if !empty(l:choice)
-            execute 'edit' fnameescape(l:choice[0])
-        endif
+    if exists(':FZF') && g:modern_tools
+        execute 'FZF'
     else
         call feedkeys(":find ", "n")
     endif
@@ -225,9 +222,9 @@ nnoremap <leader>sg :call SearchInFiles()<CR>
 
 " Search for current word under cursor
 function! SearchForReferences()
+    let l:ext = expand('%:e')
     if executable('rg') && g:modern_tools
         call SetGrepPrgToRipGrep()
-        let l:ext = expand('%:e')
         if l:ext == ''
             let l:glob = ''
         elseif l:ext == 'c' || l:ext == 'h'
@@ -239,7 +236,6 @@ function! SearchForReferences()
         redraw!
         copen
     else
-        let l:ext = expand('%:e')
         if l:ext == ''
             let l:glob = '**/* **/.*'
         elseif l:ext == 'c' || l:ext == 'h'

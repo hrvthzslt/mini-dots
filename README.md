@@ -15,6 +15,13 @@
 - Edit-compile-edit cycle, with **makeprg** and **quickfix list**
 - Language specific formatting
 
+Optional **Modern Tools** for Vim:
+
+When these tools are installed, they will be used instead of the built-in features. Can be turned off with `let g:modern_tools=0`
+
+- **fzf** for fuzzy finding files, replacing `:find`
+- **ripgrep** for searching in files, replacing `:vimgrep`
+
 ## Screen Management
 
 **Tmux** for:
