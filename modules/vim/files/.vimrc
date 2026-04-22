@@ -140,7 +140,9 @@ set path=**
 set wildmenu
 silent! set wildoptions=pum
 set wildmode=longest:full,full
-set wildignorecase
+if empty($TERMUX_VERSION)
+  set wildignorecase
+endif
 set wildignore=tags
 
 " Search and open buffers
