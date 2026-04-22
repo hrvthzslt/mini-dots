@@ -149,7 +149,7 @@ set wildignore=tags
 nnoremap <leader>sb :b<Space>
 
 " runtimepath for vim plugin that is bundled with fzf
-set runtimepath+=/usr/share/doc/fzf/examples
+set rtp+=/usr/share/doc/fzf/examples,/opt/homebrew/opt/fzf
 " fzf command for filtering files
 let $FZF_DEFAULT_COMMAND = 'find . -type f -not -path "*/.git/*"'
 
