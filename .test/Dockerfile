@@ -2,7 +2,15 @@ FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y sudo curl make git tree cloc dialog apt-utils ncurses-term bash-completion cbonsai
+    apt-get install -y sudo curl make git tree cloc dialog apt-utils ncurses-term bash-completion cbonsai locales \
+            python3.11 python3.11-venv
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
 
 RUN useradd -m -s /bin/bash user && \
     echo 'user:pass' | chpasswd && \
