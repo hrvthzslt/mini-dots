@@ -101,6 +101,10 @@ vnoremap s "ss
 nnoremap S "sS
 vnoremap S "sS
 
+" Center after paging
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
 " Ctrl+hjkl to move between splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
