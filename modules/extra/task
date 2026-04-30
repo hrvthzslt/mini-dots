@@ -10,6 +10,8 @@ install() {
   install_package "pipx"
   prints "Installing ruff..."
   pipx install ruff >/dev/null 2>&1
+  install_package "fzf"
+  install_package "ripgrep"
 }
 
 link() {
