@@ -251,7 +251,7 @@ function! SearchForReferences()
         copen
     endif
 endfunction
-nnoremap gr :call SearchForReferences()<CR>
+nnoremap <nowait> gr :call SearchForReferences()<CR>
 
 " Go to tag if present, else go to local declaration
 function! GoToTagOrDeclaration()
