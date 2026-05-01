@@ -337,10 +337,8 @@ augroup ece_cycle
     autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ -x\ %:p
     autocmd FileType sh nnoremap <buffer> <silent> <leader>ll :make<CR><CR>
 
-    autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ %
+    autocmd FileType python setlocal makeprg=ruff\ check\ --output-format\ concise\ .
     autocmd FileType python nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
-
-    autocmd FileType c,cpp nnoremap <buffer> <silent> <leader>ll :make<CR><CR><CR>
 augroup END
 
 " Format files by filetype
