@@ -264,11 +264,11 @@ endfunction
 nnoremap gd :call GoToTagOrDeclaration()<CR>
 
 " Generate tags file with ctags
-function! TagsGen()
-    let l:out = system('ctags -R . && echo "Tags generated."')
+function! TagsGen(cmd)
+    let l:out = system(a:cmd . ' && echo "Tags generated."')
     echom l:out
 endfunction
-nnoremap <leader>t :call TagsGen()<CR>
+nnoremap <leader>t :call TagsGen('ctags -R .')<CR>
 
 " -----------------------------------------------------------------------------
 " Auto-completion
