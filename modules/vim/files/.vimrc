@@ -380,13 +380,42 @@ augroup END
 " Override with local conf
 " -----------------------------------------------------------------------------
 
-" Automatically source local .vimrc.local on startup and when changing directories
+set noexrc
+
+" Automatically source local .vimrc.local on startup
 function! SourceLocalVimrc()
-    let l:local_vimrc_path = getcwd() . '/.vimrc.local'
-    if filereadable(l:local_vimrc_path)
-        execute 'source ' . fnameescape(l:local_vimrc_path)
-        echo "Sourced " . l:local_vimrc_path
+    if v:version <= 740
+        return
     endif
+
+    let l:local_vimrc_path = getcwd() . '/.vimrc.local'
+    if !filereadable(l:local_vimrc_path)
+        return
+    endif
+
+    let l:hash_file = expand('~/.local_vimrc_hashes')
+    if !filereadable(l:hash_file)
+        call writefile([], l:hash_file)
+    endif
+
+    let l:sha256 = sha256(join(readfile(l:local_vimrc_path), "\n"))
+    let l:entry = l:local_vimrc_path . '|' . l:sha256
+
+    let l:known_hashes = readfile(l:hash_file)
+    if index(l:known_hashes, l:entry) >= 0
+        execute 'source ' . fnameescape(l:local_vimrc_path)
+        echo "Sourced " . l:local_vimrc_path . " (trusted)"
+        return
+    endif
+
+    let l:choice = confirm(".vimrc.local detected. Source trust it?", "&y\n&n")
+    if l:choice != 1
+        return
+    endif
+
+    call writefile(l:known_hashes + [l:entry], l:hash_file)
+    execute 'source ' . fnameescape(l:local_vimrc_path)
+    echo "Sourced " . l:local_vimrc_path . " (trusted and added)"
 endfunction
 augroup local_vimrc
     autocmd!
