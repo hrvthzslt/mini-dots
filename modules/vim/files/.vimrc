@@ -412,10 +412,9 @@ function! SourceLocalVimrc()
     if l:choice != 1
         return
     endif
-
     call writefile(l:known_hashes + [l:entry], l:hash_file)
-    execute 'source ' . fnameescape(l:local_vimrc_path)
-    echo "Sourced " . l:local_vimrc_path . " (trusted and added)"
+
+    call SourceLocalVimrc()
 endfunction
 augroup local_vimrc
     autocmd!
